@@ -1,0 +1,74 @@
+.immutable-button-character-selector {
+    /*-fx-background-color: white;*/
+
+    -fx-border-width: 2;
+    -fx-border-color: brown;
+
+    /*-fx-text-fill: brown;*/
+    -fx-font-size: 16.5pt;
+    -fx-font-weight: bold;
+    -fx-font-family: Calibri;
+
+    -fx-padding: 6;
+}
+
+/*.immutable-button-character-selector:hover {*/
+/*-fx-background-color: brown;*/
+
+/*-fx-text-fill: white;*/
+/*}*/
+
+.immutable-container-button-character-selector {
+    -fx-padding: 0;
+    -fx-spacing: -2;
+}
+
+.immutable-instruction-label-character-selection {
+    -fx-font-style: italic;
+    -fx-text-fill: brown;
+    -fx-font-size: 15pt;
+    -fx-font-family: Calibri;
+}
+
+.immutable-container-stats-character-selection {
+    -fx-border-width: 2;
+    -fx-border-color: brown;
+    -fx-alignment: center;
+    -fx-pref-height: 380;
+    -fx-text-fill: brown;
+    -fx-font-size: 16pt;
+    -fx-font-family: Calibri;
+    -fx-hgap: 50;
+}
+
+.progress-bar-stat {
+    -fx-text-box-border: brown;
+    -fx-control-inner-background: white;
+    -fx-accent: brown;
+}
+
+.score-label-stat {
+    -fx-text-fill: brown;
+}
+
+.immutable-container-dialogue-box-pane-character-selection {
+    -fx-spacing: 0;
+    -fx-padding: 15;
+    -fx-alignment: center;
+}
+
+.button-continue-character-select {
+    -fx-border-width: 2;
+    -fx-border-color: brown;
+    -fx-text-fill: brown;
+    -fx-background-color: white;
+    -fx-font-size: 16.5pt;
+    -fx-font-weight: bold;
+    -fx-font-family: Calibri;
+    -fx-border-radius: 5;
+}
+
+.button-continue-character-select:hover {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
