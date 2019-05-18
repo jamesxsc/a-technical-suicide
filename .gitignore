@@ -1,6 +1,6 @@
 *.jar
 *.iml
-/idea/
+/.idea/
 /out/
 *.secret.java
 .gitattributes

@@ -2,14 +2,14 @@ package uk.co.xsc;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -19,16 +19,18 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import uk.co.xsc.panes.PrimaryWindowPane;
 import uk.co.xsc.player.Character;
+import uk.co.xsc.player.datatags.WillToLiveAttribute;
 
 import javax.swing.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ATechnicalSuicide extends Application {
 
-    private static int width = 1200;
-    private static int height = 800;
+    public static int width = 1200;
+    public static int height = 800;
 
     private Character character;
+    private WillToLiveAttribute willToLiveAttribute;
 
     public static void main(String[] args) {
         launch(args);
@@ -59,6 +61,8 @@ public class ATechnicalSuicide extends Application {
     }
 
     private void initCanvas(GraphicsContext graphicsContext) {
+        graphicsContext.clearRect(0, 0, width, height);
+
         graphicsContext.setFill(Color.ALICEBLUE);
         graphicsContext.fillRect(0, 0, width, height);
 
@@ -301,6 +305,10 @@ public class ATechnicalSuicide extends Application {
                 root.getChildren().remove(primary);
 
                 graphicsContext.restore();
+
+                initCanvas(graphicsContext);
+
+                beginGameplay(graphicsContext);
             }
         });
 
@@ -317,4 +325,13 @@ public class ATechnicalSuicide extends Application {
 
         root.getChildren().add(primary);
     }
+
+    private void beginGameplay(GraphicsContext graphicsContext) {
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.setFont(Font.font("Calibri", FontWeight.BOLD, 28));
+        graphicsContext.fillText(character.name, 2 * (double) width / 3 + 10, 28);
+
+        willToLiveAttribute = new WillToLiveAttribute(graphicsContext);
+    }
+
 }
