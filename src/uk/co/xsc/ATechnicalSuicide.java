@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import uk.co.xsc.panes.PrimaryWindowPane;
 import uk.co.xsc.player.Character;
 import uk.co.xsc.player.datatags.WillToLiveAttribute;
+import uk.co.xsc.tutorial.TutorialManager;
 
 import javax.swing.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -29,8 +30,14 @@ public class ATechnicalSuicide extends Application {
     public static int width = 1200;
     public static int height = 800;
 
+    private final TutorialManager tutorialManager;
+
     private Character character;
     private WillToLiveAttribute willToLiveAttribute;
+
+    public ATechnicalSuicide() {
+        tutorialManager = new TutorialManager();
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -84,6 +91,16 @@ public class ATechnicalSuicide extends Application {
 
         graphicsContext.setFill(Color.DIMGRAY);
         graphicsContext.fillRect(0, 40, 220, 5);
+
+        if (character != null) {
+            graphicsContext.setFill(Color.WHITE);
+            graphicsContext.setFont(Font.font("Calibri", FontWeight.BOLD, 28));
+            graphicsContext.fillText(character.name, 2 * (double) width / 3 + 10, 28);
+
+            if (willToLiveAttribute != null) {
+                willToLiveAttribute.render(graphicsContext);
+            }
+        }
     }
 
     @SuppressWarnings("Duplicates")
@@ -308,6 +325,8 @@ public class ATechnicalSuicide extends Application {
 
                 initCanvas(graphicsContext);
 
+                runTutorial(root);
+
                 beginGameplay(graphicsContext);
             }
         });
@@ -324,6 +343,12 @@ public class ATechnicalSuicide extends Application {
         primary.getChildren().add(dialogueBoxPane);
 
         root.getChildren().add(primary);
+    }
+
+    private void runTutorial(PrimaryWindowPane windowPane) {
+        StackPane pane = new StackPane();
+        windowPane.getChildren().add(pane);
+        this.tutorialManager.playThroughTutorial(pane);
     }
 
     private void beginGameplay(GraphicsContext graphicsContext) {
