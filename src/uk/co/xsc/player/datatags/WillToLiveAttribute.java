@@ -25,7 +25,7 @@ public class WillToLiveAttribute extends Attribute {
 
         renderCache = new AtomicInteger();
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i <= 30; i++) {
             System.out.println("calling for" +i);
             final int j = i;
             this.states.put(i, (c) -> {
@@ -33,8 +33,6 @@ public class WillToLiveAttribute extends Attribute {
                 render(this.graphicsContext);
             });
         }
-
-        renderCache.set(30);
 
         super.onChange();
     }
@@ -68,20 +66,21 @@ public class WillToLiveAttribute extends Attribute {
         super.onChange();
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
+    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions"})
     @Override
     public void render(GraphicsContext graphicsContext) {
         int state = renderCache.get();
-        boolean hasFraction = state % 5 == 0;
+        boolean hasFraction = state % 5 != 0;
+        System.out.println("mod" + state % 5);
         System.out.println(hasFraction);
         int fractionSegmentsPresent = hasFraction ? state % 5 : 0;
 
-        Image fullStartSegment = new Image("data/img/attributes/count/willtolive/fullStartSegment.png", true);
-        Image fullMiddleSegment = new Image("data/img/attributes/count/willtolive/fullMiddleSegment.png", true);
-        Image fullEndSegment = new Image("data/img/attributes/count/willtolive/fullEndSegment.png", true);
-        Image emptyStartSegment = new Image("data/img/attributes/count/willtolive/emptyStartSegment.png", true);
-        Image emptyMiddleSegment = new Image("data/img/attributes/count/willtolive/emptyMiddleSegment.png", true);
-        Image emptyEndSegment = new Image("data/img/attributes/count/willtolive/emptyEndSegment.png", true);
+        Image fullStartSegment = new Image(getClass().getClassLoader().getResource("data/img/attributes/count/willtolive/fullStartSegment.png").toExternalForm());
+        Image fullMiddleSegment = new Image(getClass().getClassLoader().getResource("data/img/attributes/count/willtolive/fullMiddleSegment.png").toExternalForm());
+        Image fullEndSegment = new Image(getClass().getClassLoader().getResource("data/img/attributes/count/willtolive/fullEndSegment.png").toExternalForm());
+        Image emptyStartSegment = new Image(getClass().getClassLoader().getResource("data/img/attributes/count/willtolive/emptyStartSegment.png").toExternalForm());
+        Image emptyMiddleSegment = new Image(getClass().getClassLoader().getResource("data/img/attributes/count/willtolive/emptyMiddleSegment.png").toExternalForm());
+        Image emptyEndSegment = new Image(getClass().getClassLoader().getResource("data/img/attributes/count/willtolive/emptyEndSegment.png").toExternalForm());
 
         int xPos = (2 * ATechnicalSuicide.width / 3) + 130;
         int yPos = 10;
@@ -108,30 +107,32 @@ public class WillToLiveAttribute extends Attribute {
             System.out.println(2 + " " + fractionSegmentsPresent);
             graphicsContext.drawImage(fullStartSegment, xCursor, yCursor);
             xCursor += 6;
-        }
 
-        --fractionSegmentsPresent;
 
-        int midSegmentsDrawn = 0;
-
-        while (fractionSegmentsPresent > 1) {
-            System.out.println(3);
-            graphicsContext.drawImage(fullMiddleSegment, xCursor, yCursor);
-            xCursor += 6;
             --fractionSegmentsPresent;
-            ++midSegmentsDrawn;
+
+            int midSegmentsDrawn = 0;
+
+            while (fractionSegmentsPresent >= 1) {
+                System.out.println(3);
+                graphicsContext.drawImage(fullMiddleSegment, xCursor, yCursor);
+                xCursor += 6;
+                --fractionSegmentsPresent;
+                ++midSegmentsDrawn;
+            }
+
+            while (midSegmentsDrawn < 4) {
+                System.out.println(4);
+                graphicsContext.drawImage(emptyMiddleSegment, xCursor, yCursor);
+                ++midSegmentsDrawn;
+                xCursor += 6;
+            }
+
+            graphicsContext.drawImage(fractionSegmentsPresent == 0 ? emptyEndSegment : fullEndSegment, xCursor, yCursor);
+
+            xCursor += 12;
+
         }
-
-        while (midSegmentsDrawn < 4) {
-            System.out.println(4);
-            graphicsContext.drawImage(emptyMiddleSegment, xCursor, yCursor);
-            ++midSegmentsDrawn;
-            xCursor += 6;
-        }
-
-        graphicsContext.drawImage(fractionSegmentsPresent == 0 ? emptyEndSegment : fullEndSegment, xCursor, yCursor);
-
-        xCursor += 12;
 
         int stateCount = state / 5;
         if (stateCount < 5) {
