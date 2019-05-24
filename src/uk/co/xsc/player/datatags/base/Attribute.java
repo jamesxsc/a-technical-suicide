@@ -22,9 +22,6 @@ public abstract class Attribute {
     public abstract void increment();
 
     protected final void onChange() {
-        System.out.println(getStates());
-        System.out.println(getCurrentState());
-        System.out.println(getStates().get(getCurrentState()));
         getStates().get(getCurrentState()).accept(new Object[0]);
     }
 

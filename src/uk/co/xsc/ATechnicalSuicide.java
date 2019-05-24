@@ -23,12 +23,17 @@ import uk.co.xsc.player.datatags.WillToLiveAttribute;
 import uk.co.xsc.tutorial.TutorialManager;
 
 import javax.swing.*;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ATechnicalSuicide extends Application {
 
     public static int width = 1200;
     public static int height = 800;
+
+    public static final Random RENDER_RNG = new Random();
+    public static final Random GAME_RNG = new Random();
+    public static final Random AI_RNG = new Random();
 
     private final TutorialManager tutorialManager;
 
@@ -348,7 +353,11 @@ public class ATechnicalSuicide extends Application {
     private void runTutorial(PrimaryWindowPane windowPane) {
         StackPane pane = new StackPane();
         windowPane.getChildren().add(pane);
-        this.tutorialManager.playThroughTutorial(pane);
+        try {
+            this.tutorialManager.playThroughTutorial(pane);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void beginGameplay(GraphicsContext graphicsContext) {

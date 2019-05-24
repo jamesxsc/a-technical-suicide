@@ -12,11 +12,9 @@ import java.util.function.Consumer;
 
 public class WillToLiveAttribute extends Attribute {
 
+    private static AtomicInteger renderCache;
     private final Map<Integer, Consumer<Object>> states;
     private final GraphicsContext graphicsContext;
-
-    private static AtomicInteger renderCache;
-
     private int currentState = 30;
 
     public WillToLiveAttribute(GraphicsContext graphicsContext) {
@@ -26,7 +24,6 @@ public class WillToLiveAttribute extends Attribute {
         renderCache = new AtomicInteger();
 
         for (int i = 0; i <= 30; i++) {
-            System.out.println("calling for" +i);
             final int j = i;
             this.states.put(i, (c) -> {
                 renderCache.set(j);
@@ -55,14 +52,12 @@ public class WillToLiveAttribute extends Attribute {
     @Override
     public void decrement() {
         --currentState;
-
         super.onChange();
     }
 
     @Override
     public void increment() {
         ++currentState;
-
         super.onChange();
     }
 
@@ -71,8 +66,6 @@ public class WillToLiveAttribute extends Attribute {
     public void render(GraphicsContext graphicsContext) {
         int state = renderCache.get();
         boolean hasFraction = state % 5 != 0;
-        System.out.println("mod" + state % 5);
-        System.out.println(hasFraction);
         int fractionSegmentsPresent = hasFraction ? state % 5 : 0;
 
         Image fullStartSegment = new Image(getClass().getClassLoader().getResource("data/img/attributes/count/willtolive/fullStartSegment.png").toExternalForm());
@@ -87,9 +80,7 @@ public class WillToLiveAttribute extends Attribute {
 
         int xCursor = xPos;
         int yCursor = yPos;
-        System.out.println("state"+state);
         for (int i = 0; i < state / 5; i++) {
-            System.out.println(1 + " " + state);
             graphicsContext.drawImage(fullStartSegment, xCursor, yCursor);
             xCursor += 6;
             graphicsContext.drawImage(fullMiddleSegment, xCursor, yCursor);
@@ -102,19 +93,15 @@ public class WillToLiveAttribute extends Attribute {
             xCursor += 12;
         }
 
-        System.out.println("f"+fractionSegmentsPresent);
         if (fractionSegmentsPresent != 0) {
-            System.out.println(2 + " " + fractionSegmentsPresent);
             graphicsContext.drawImage(fullStartSegment, xCursor, yCursor);
             xCursor += 6;
-
 
             --fractionSegmentsPresent;
 
             int midSegmentsDrawn = 0;
 
             while (fractionSegmentsPresent >= 1) {
-                System.out.println(3);
                 graphicsContext.drawImage(fullMiddleSegment, xCursor, yCursor);
                 xCursor += 6;
                 --fractionSegmentsPresent;
@@ -122,7 +109,6 @@ public class WillToLiveAttribute extends Attribute {
             }
 
             while (midSegmentsDrawn < 4) {
-                System.out.println(4);
                 graphicsContext.drawImage(emptyMiddleSegment, xCursor, yCursor);
                 ++midSegmentsDrawn;
                 xCursor += 6;
@@ -136,9 +122,7 @@ public class WillToLiveAttribute extends Attribute {
 
         int stateCount = state / 5;
         if (stateCount < 5) {
-            System.out.println(5);
             while (stateCount < 5) {
-                System.out.println(5.5);
                 graphicsContext.drawImage(emptyStartSegment, xCursor, yCursor);
                 xCursor += 6;
                 graphicsContext.drawImage(emptyMiddleSegment, xCursor, yCursor);
@@ -153,11 +137,6 @@ public class WillToLiveAttribute extends Attribute {
             }
         }
 
-
-//        graphicsContext.setFill(Color.LIGHTSALMON);
-//        graphicsContext.fillRect(xPos, yPos, 250, 20);
-//        graphicsContext.setFill(Color.INDIANRED);
-//        graphicsContext.fillRect(xPos, yPos, 6, 20);
     }
 
 }
