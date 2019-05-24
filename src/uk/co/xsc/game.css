@@ -12,6 +12,32 @@
     -fx-padding: 6;
 }
 
+/* tutorial stuff */
+.tutorial-point-label {
+    -fx-font-size: 24pt;
+    -fx-font-family: Calibri;
+    -fx-text-fill: white;
+    -fx-line-spacing: -12;
+}
+
+.tutorial-point-button-continue {
+    -fx-font-size: 18pt;
+    -fx-font-family: Calibri;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 3;
+    -fx-border-radius: 0;
+    -fx-padding: 5;
+}
+
+.tutorial-point-button-continue:hover {
+    -fx-background-color: white;
+    -fx-border-color: grey;
+    -fx-text-fill: black;
+}
+/* end tutorial stuff */
+
 /*.immutable-button-character-selector:hover {*/
 /*-fx-background-color: brown;*/
 

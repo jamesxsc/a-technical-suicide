@@ -1,10 +1,12 @@
 package uk.co.xsc.tutorial;
 
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -12,12 +14,14 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import uk.co.xsc.ATechnicalSuicide;
 import uk.co.xsc.tutorial.points.CharacterNameTutorialPoint;
 import uk.co.xsc.tutorial.points.WillToLiveTutorialPoint;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class TutorialManager {
@@ -45,16 +49,10 @@ public class TutorialManager {
                 Canvas canvas = new Canvas(ATechnicalSuicide.width, ATechnicalSuicide.height);
                 StackPane canvasPane = new StackPane(canvas);
                 GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-                Button button = new Button("Continue");
-                button.setOnAction((e) ->
-                {
-                    System.out.println("clicked");
-                    synchronized (this) {
-                        this.notify();
-                    }
-                });
 
-                for (TutorialPoint point : points) {
+                for (Iterator<TutorialPoint> iter = points.iterator(); iter.hasNext(); ) {
+
+                    TutorialPoint point = iter.next();
 
                     graphicsContext.clearRect(0, 0, ATechnicalSuicide.width, ATechnicalSuicide.height);
                     if (point.content.length() > 1028) {
@@ -62,7 +60,7 @@ public class TutorialManager {
                     }
 
                     int boxWidth = 350;
-                    int boxHeight = 15 * (point.content.length() / 20) + 100;
+                    int boxHeight = 15 * (point.content.length() / 20) + 180;
 
                     int xPos = 0;
                     int yPos = 0;
@@ -81,6 +79,28 @@ public class TutorialManager {
                         }
                     }
 
+                    Label label = new Label();
+                    label.setText(point.content);
+                    label.setMaxWidth(boxWidth - 20);
+                    label.setMaxHeight(boxHeight - 25);
+                    label.setAlignment(Pos.TOP_CENTER);
+                    label.setWrapText(true);
+                    label.setTextAlignment(TextAlignment.JUSTIFY);
+                    label.setTranslateX(xPos - (double) ATechnicalSuicide.width / 2 + (double) boxWidth / 2);
+                    label.setTranslateY(yPos - (double) ATechnicalSuicide.height / 2 + (double) boxHeight / 2 + 30);
+                    label.getStyleClass().add("tutorial-point-label");
+
+                    Button button = new Button(iter.hasNext() ? "Continue" : "Finish Tutorial");
+                    button.getStyleClass().add("tutorial-point-button-continue");
+                    button.setOnAction((e) ->
+                    {
+                        synchronized (this) {
+                            this.notify();
+                        }
+                    });
+                    button.setTranslateX(xPos - (double) ATechnicalSuicide.width / 2 + (double) boxWidth / 2);
+                    button.setTranslateY(yPos - (double) ATechnicalSuicide.height / 2 + boxHeight - 35);
+
                     graphicsContext.setFill(Color.BLACK);
                     graphicsContext.fillRect(xPos, yPos, boxWidth, boxHeight);
 
@@ -93,19 +113,15 @@ public class TutorialManager {
                     graphicsContext.setFill(Color.WHITE);
                     graphicsContext.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.ITALIC, 32));
                     graphicsContext.fillText("Tutorial", xPos + 10, yPos + 32);
-//break at 30 create util class that taks font size and pixel width and text and returns array
                     graphicsContext.setStroke(Color.WHITE);
                     graphicsContext.setLineWidth(3);
-                    System.out.println(xPos);
-                    System.out.println(yPos);
                     graphicsContext.strokeLine(xPos + 8, yPos + 38, xPos + boxWidth - 80, yPos + 38);
 
-                    graphicsContext.setFont(Font.font("Calibri", 24));
-                    graphicsContext.fillText(point.content, xPos + 15, yPos + 60);
+                    //graphicsContext.setFont(Font.font("Calibri", 24));
+                    //graphicsContext.fillText(point.content, xPos + 15, yPos + 60);
 
-                    Platform.runLater(() -> pane.getChildren().setAll(canvasPane, button));
+                    Platform.runLater(() -> pane.getChildren().setAll(canvasPane, label, button));
 
-                    System.out.println("wait placeholder (pre)");
                     synchronized (this) {
                         try {
                             this.wait();
@@ -113,11 +129,10 @@ public class TutorialManager {
                             e1.printStackTrace();
                         }
                     }
-                    System.out.println("wait placeholder");
 
                 }
                 graphicsContext.clearRect(0, 0, ATechnicalSuicide.width, ATechnicalSuicide.height);
-                Platform.runLater(()->pane.getChildren().setAll());
+                Platform.runLater(() -> pane.getChildren().setAll());
             }
         }.start();
     }
