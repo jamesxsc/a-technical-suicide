@@ -199,33 +199,43 @@ public class ATechnicalSuicide extends Application {
 
         HBox scoreSoundBox = new HBox();
         scoreSoundBox.getChildren().addAll(scoreSoundLabel, scoreSoundBar);
+        scoreSoundBox.getStyleClass().add("container-stat");
         scoreSoundBox.setVisible(false);
         HBox scoreLightingBox = new HBox();
         scoreLightingBox.getChildren().addAll(scoreLightingLabel, scoreLightingBar);
+        scoreLightingBox.getStyleClass().add("container-stat");
         scoreLightingBox.setVisible(false);
         HBox scoreRiggingBox = new HBox();
         scoreRiggingBox.getChildren().addAll(scoreRiggingLabel, scoreRiggingBar);
+        scoreRiggingBox.getStyleClass().add("container-stat");
         scoreRiggingBox.setVisible(false);
         HBox scoreStageManagementBox = new HBox();
         scoreStageManagementBox.getChildren().addAll(scoreStageManagementLabel, scoreStageManagementBar);
+        scoreStageManagementBox.getStyleClass().add("container-stat");
         scoreStageManagementBox.setVisible(false);
         HBox scoreProductionBox = new HBox();
         scoreProductionBox.getChildren().addAll(scoreProductionLabel, scoreProductionBar);
+        scoreProductionBox.getStyleClass().add("container-stat");
         scoreProductionBox.setVisible(false);
         HBox scoreLeadershipBox = new HBox();
         scoreLeadershipBox.getChildren().addAll(scoreLeadershipLabel, scoreLeadershipBar);
+        scoreLeadershipBox.getStyleClass().add("container-stat");
         scoreLeadershipBox.setVisible(false);
         HBox scoreEvilBox = new HBox();
         scoreEvilBox.getChildren().addAll(scoreEvilLabel, scoreEvilBar);
+        scoreEvilBox.getStyleClass().add("container-stat");
         scoreEvilBox.setVisible(false);
         HBox scoreKindBox = new HBox();
         scoreKindBox.getChildren().addAll(scoreKindLabel, scoreKindBar);
+        scoreKindBox.getStyleClass().add("container-stat");
         scoreKindBox.setVisible(false);
         HBox scoreHonestBox = new HBox();
         scoreHonestBox.getChildren().addAll(scoreHonestLabel, scoreHonestBar);
+        scoreHonestBox.getStyleClass().add("container-stat");
         scoreHonestBox.setVisible(false);
         HBox scoreMusicalityBox = new HBox();
         scoreMusicalityBox.getChildren().addAll(scoreMusicalityLabel, scoreMusicalityBar);
+        scoreMusicalityBox.getStyleClass().add("container-stat");
         scoreMusicalityBox.setVisible(false);
 
         characterStats.getChildren().addAll(

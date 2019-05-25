@@ -16,8 +16,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import uk.co.xsc.ATechnicalSuicide;
-import uk.co.xsc.tutorial.points.CharacterNameTutorialPoint;
-import uk.co.xsc.tutorial.points.WillToLiveTutorialPoint;
+import uk.co.xsc.tutorial.points.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,6 +36,9 @@ public class TutorialManager {
     }
 
     private void initPoints(List<TutorialPoint> pointsList) {
+        pointsList.add(new ScenarioExplanationTutorialPoint());
+        pointsList.add(new ChoiceActionTutorialPoint());
+        pointsList.add(new ActionPurposeTutorialPoint());
         pointsList.add(new CharacterNameTutorialPoint());
         pointsList.add(new WillToLiveTutorialPoint());
     }
@@ -60,7 +62,8 @@ public class TutorialManager {
                     }
 
                     int boxWidth = 350;
-                    int boxHeight = 15 * (point.content.length() / 20) + 180;
+                    int boxHeight = (point.content.length() > 100 ? (15 * point.content.length() / 35) :
+                            (15 * (point.content.length() / 20))) + 180;
 
                     int xPos = 0;
                     int yPos = 0;
@@ -81,6 +84,7 @@ public class TutorialManager {
 
                     Label label = new Label();
                     label.setText(point.content);
+                    label.setFont(Font.font("Calibri", point.content.length() > 100 ? 22 : 28));
                     label.setMaxWidth(boxWidth - 20);
                     label.setMaxHeight(boxHeight - 25);
                     label.setAlignment(Pos.TOP_CENTER);
@@ -108,7 +112,8 @@ public class TutorialManager {
                     graphicsContext.setLineCap(StrokeLineCap.ROUND);
 
                     graphicsContext.setStroke(Color.BLACK);
-                    graphicsContext.strokeLine(xPos + (double) boxWidth / 2, yPos + (double) boxHeight / 2, point.xPos, point.yPos);
+                    if (point.xPos != -1 && point.yPos != -1)
+                        graphicsContext.strokeLine(xPos + (double) boxWidth / 2, yPos + (double) boxHeight / 2, point.xPos, point.yPos);
 
                     graphicsContext.setFill(Color.WHITE);
                     graphicsContext.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.ITALIC, 32));

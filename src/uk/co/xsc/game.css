@@ -14,10 +14,9 @@
 
 /* tutorial stuff */
 .tutorial-point-label {
-    -fx-font-size: 24pt;
     -fx-font-family: Calibri;
     -fx-text-fill: white;
-    -fx-line-spacing: -12;
+    -fx-line-spacing: -10;
 }
 
 .tutorial-point-button-continue {
@@ -97,4 +96,9 @@
 .button-continue-character-select:hover {
     -fx-text-fill: white;
     -fx-background-color: brown;
+}
+
+.container-stat {
+    /*-fx-alignment: TOP_RIGHT;*/
+    /*-fx-translate-x: -30;*/
 }
